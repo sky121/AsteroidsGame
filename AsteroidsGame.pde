@@ -1,4 +1,3 @@
-//your variable declarations here
 public void setup() 
 {
   //your code here
@@ -7,9 +6,28 @@ public void draw()
 {
   //your code here
 }
-class SpaceShip //extends Floater  
+class SpaceShip extends Floater  
 {   
     //your code here
+    SpaceShip(){
+      int corners = 3;  //the number of corners, a triangular floater has 3   
+   int[] xCorners;   
+   int[] yCorners;   
+   int myColor;   
+   double myCenterX, myCenterY; //holds center coordinates   
+   double myDirectionX, myDirectionY; //holds x and y coordinates of the vector for direction of travel   
+   double myPointDirection; //holds current direction the ship is pointing in degrees    
+    }
+   public void setX(int x){myCenterX = x;}  
+   public double getX(){return myCenterX;} 
+   public void setY(int y){myCenterY=y;}   
+   public double getY(){return myCenterY;}   
+   public void setDirectionX(double x){myDirectionX= x;}   
+   public double getDirectionX(){return myDirectionX;}  
+   public void setDirectionY(double y){myDirectionY=y;}  
+   public double getDirectionY(){return myDirectionY;} 
+   public void setPointDirection(int degrees){myPointDirection = degrees;}
+   public double getPointDirection(){return myPointDirection;}
 }
 abstract class Floater //Do NOT modify the Floater class! Make changes in the SpaceShip class 
 {   
@@ -21,9 +39,9 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
   protected double myDirectionX, myDirectionY; //holds x and y coordinates of the vector for direction of travel   
   protected double myPointDirection; //holds current direction the ship is pointing in degrees    
   abstract public void setX(int x);  
-  abstract public int getX();   
+  abstract public double getX();   
   abstract public void setY(int y);   
-  abstract public int getY();   
+  abstract public double getY();   
   abstract public void setDirectionX(double x);   
   abstract public double getDirectionX();   
   abstract public void setDirectionY(double y);   
@@ -86,5 +104,4 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
     }   
     endShape(CLOSE);  
   }   
-} 
-
+}
