@@ -1,11 +1,61 @@
+SpaceShip sky = new SpaceShip();
+Stars [] s;
+
 public void setup() 
 {
+  size(500,500);
+  s = new Stars[(int)(Math.random()*50+30)];
+   for(int i =0; i<s.length; i++){
+   s[i] = new Stars();
+ }  
   //your code here
 }
 public void draw() 
 {
+  
+   for(int i =0; i<s.length; i++){
+   s[i].show();
+ }  
+  
+  fill(0,0,0, 30);
+rect(-1,-1,600,600);
+fill(255,0,0);
+  sky.show();
+//  if(keyPressed){
+ //   if(key == 'w')  
+   sky.move();
+//  }
+
+  if(keyPressed){
+  if(key == 'h'){
+    sky.setX((int)(Math.random()*500));
+    sky.setY((int)(Math.random()*500));
+
+    sky.setDirectionX(0);
+     sky.setDirectionY(0);
+  }
+ }
+  
+  if(keyPressed){
+  if(key == 'w')
+    sky.accelerate(0.1);
+ }
+   if(keyPressed){
+  if(key == 's')
+    sky.accelerate(-0.1);
+ }
+   if(keyPressed){
+   if(key == 'd')
+   sky.rotate(2);
+   }
+   if(keyPressed){
+   if(key == 'a')
+   sky.rotate(-2);
+   }
   //your code here
 }
+
+
 class SpaceShip extends Floater  
 {   
     //your code here
@@ -18,6 +68,7 @@ class SpaceShip extends Floater
    double myDirectionX, myDirectionY; //holds x and y coordinates of the vector for direction of travel   
    double myPointDirection; //holds current direction the ship is pointing in degrees    
     }
+
    public void setX(int x){myCenterX = x;}  
    public double getX(){return myCenterX;} 
    public void setY(int y){myCenterY=y;}   
@@ -28,6 +79,22 @@ class SpaceShip extends Floater
    public double getDirectionY(){return myDirectionY;} 
    public void setPointDirection(int degrees){myPointDirection = degrees;}
    public double getPointDirection(){return myPointDirection;}
+}
+
+class Stars
+{
+  int x, y;
+Stars(){
+
+
+x = (int)(Math.random()*500);
+y = (int)(Math.random()*500);
+}
+void show(){
+fill(255,255,255);
+ellipse(x,y,5,5);
+}
+
 }
 abstract class Floater //Do NOT modify the Floater class! Make changes in the SpaceShip class 
 {   
@@ -62,11 +129,14 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
   {     
     //rotates the floater by a given number of degrees    
     myPointDirection+=nDegreesOfRotation;   
-  }   
+  }  
+ 
   public void move ()   //move the floater in the current direction of travel
   {      
-    //change the x and y coordinates by myDirectionX and myDirectionY       
-    myCenterX += myDirectionX;    
+    //change the x and y coordinates by myDirectionX and myDirectionY  
+
+    myCenterX += myDirectionX;
+    
     myCenterY += myDirectionY;     
 
     //wrap around screen    
@@ -88,9 +158,12 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
     }   
   }   
   public void show ()  //Draws the floater at the current position  
-  {             
-    fill(myColor);   
-    stroke(myColor);    
+  {    
+
+
+ fill(0,0,255);   
+    stroke(255,0,0); 
+   
     //convert degrees to radians for sin and cos         
     double dRadians = myPointDirection*(Math.PI/180);                 
     int xRotatedTranslated, yRotatedTranslated;    
@@ -102,6 +175,11 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
       yRotatedTranslated = (int)((xCorners[nI]* Math.sin(dRadians)) + (yCorners[nI] * Math.cos(dRadians))+myCenterY);      
       vertex(xRotatedTranslated,yRotatedTranslated);    
     }   
+    corners = 4;
+int[] xS = {-8,16,-8,-2};
+int[] yS = {-8,0,8,0}; 
+xCorners = xS;
+yCorners = yS;
     endShape(CLOSE);  
   }   
 }
