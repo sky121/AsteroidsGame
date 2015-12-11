@@ -1,24 +1,29 @@
 SpaceShip sky = new SpaceShip();
 Stars [] s;
-//Asteroids [] a;
+ArrayList <Bullets> bulletList;
 ArrayList <Asteroids> theList;
-
-//Asteroids a = new Asteroids();
+double skyX;
+double skyY;
+double skyDirectionX;
+double skyDirectionY;
+boolean hit = true;
 public void setup() 
 {
 
   size(500, 500);
+  sky.setX(200);
+  sky.setY(200);
+
+  //  bullet.accelerate(0.1);
+  bulletList = new ArrayList <Bullets>(); 
   theList = new ArrayList <Asteroids>();
   s = new Stars[(int)(Math.random()*50+30)];
   // a = new Asteroids();
+
   for (int i =0; i<s.length; i++) {
     s[i] = new Stars();
   }  
-//  a = new Asteroids[20];
-  /*
- for(int i = 0; i<a.length; i++){
-   a[i] = new Asteroids();
-   }*/
+
   for (int i = 0; i<20; i++) {
     theList.add(new Asteroids());
   }
@@ -29,9 +34,13 @@ public void draw()
 {
   //  Asteroids.show();
 
+
   for (int i =0; i<s.length; i++) {
     s[i].show();
   } 
+
+
+  fill(255, 0, 0);
 
   for (int nI = 0; nI < theList.size (); nI++)
   {
@@ -41,23 +50,36 @@ public void draw()
     anotherThing.rotate((int)(Math.random()* 10));
     anotherThing.accelerate(0.1);
   }
-  /*
-    for(int i =0; i<a.length; i++){
-   a[i].show();
-   a[i].move();
-   a[i].rotate((int)(Math.random()* 10));
-   a[i].accelerate(0.1);
-   } 
-   */
+
+
   fill(0, 0, 0, 30);
   rect(-1, -1, 600, 600);
   fill(255, 0, 0);
   sky.show();
-  //  if(keyPressed){
-  //   if(key == 'w')  
   sky.move();
-  //  }
 
+
+  for (int nI = 0; nI < bulletList.size (); nI++)
+  {
+    Bullets bulletThing = bulletList.get(nI);
+
+    bulletThing.show();
+    bulletThing.move();
+    double x = bulletThing.getX();
+    double y = bulletThing.getY();
+  
+    if (y<500 && y>0 && get((int)x, (int)y) == color(0, 255, 0)) {
+      bulletThing.remove(nI);
+      hit = true;
+    } else {
+      hit = false;
+    }
+  }
+  if (keyPressed) {
+    if (key == ' ') {
+      bulletList.add(new Bullets(sky));
+    }
+  }
   if (keyPressed) {
     if (key == 'h') {
       sky.setX((int)(Math.random()*500));
@@ -84,12 +106,10 @@ public void draw()
     if (key == 'a')
       sky.rotate(-5);
   }
-  //a.move(); 
-  //a.show();
-  // a.rotate((int)(Math.random()* 10));
-  //a.accelerate(0.1);
+
   //your code here
 }
+
 
 class Asteroids extends Floater
 {
@@ -165,7 +185,7 @@ class Asteroids extends Floater
 
 
     fill(5, 5, 5);   
-    stroke(255, 0, 0); 
+    stroke(0, 255, 0); 
 
     //convert degrees to radians for sin and cos         
     double dRadians = myPointDirection*(Math.PI/180);                 
@@ -215,16 +235,73 @@ class Asteroids extends Floater
 class SpaceShip extends Floater  
 {   
   //your code here
+
   SpaceShip() {
     int corners = 3;  //the number of corners, a triangular floater has 3   
     int[] xCorners;   
     int[] yCorners;   
     int myColor;   
-    double myCenterX, myCenterY; //holds center coordinates   
+    double myCenterX =250;
+    double myCenterY = 250; //holds center coordinates   
     double myDirectionX, myDirectionY; //holds x and y coordinates of the vector for direction of travel   
     double myPointDirection; //holds current direction the ship is pointing in degrees
   }
 
+  public void setX(int x) {
+    myCenterX = x;
+  }  
+  public double getX() {
+    return myCenterX;
+  } 
+  public void setY(int y) {
+    myCenterY=y;
+  }   
+  public double getY() {
+    return myCenterY;
+  }   
+  public void setDirectionX(double x) {
+    myDirectionX= x;
+  }   
+  public double getDirectionX() {
+    return myDirectionX;
+  }  
+  public void setDirectionY(double y) {
+    myDirectionY=y;
+  }  
+  public double getDirectionY() {
+    return myDirectionY;
+  } 
+  public void setPointDirection(int degrees) {
+    myPointDirection = degrees;
+  }
+  public double getPointDirection() {
+    return myPointDirection;
+  }
+}
+class Bullets extends Floater
+{
+  Bullets(SpaceShip theShip) {
+    //    int corners = 3;  //the number of corners, a triangular floater has 3   
+    //        //holds current direction the ship is pointing in degrees
+    //    int[] xCorners;   
+    //    int[] yCorners;   
+    //    int myColor;   
+    myCenterX = theShip.getX() ;
+    myCenterY = theShip.getY() ; //holds center coordinates   
+    myPointDirection = theShip.getPointDirection();
+    double dRadians =  myPointDirection*(Math.PI/180);
+    myDirectionX = 5 * Math.cos(dRadians) + theShip.getDirectionX();
+    myDirectionY = 5 * Math.cos(dRadians) + theShip.getDirectionY(); //holds x and y coordinates of the vector for direction of travel
+  }
+
+
+
+  public void show() {
+    stroke(0, 0, 255);
+    fill(0, 0, 255);
+    ellipse((float)myCenterX, (float)myCenterY, (float)5, (float)5);
+    stroke(255, 0, 0);
+  }
   public void setX(int x) {
     myCenterX = x;
   }  
