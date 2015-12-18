@@ -285,8 +285,8 @@ class Bullets extends Floater
     myCenterY = theShip.getY() ; //holds center coordinates   
     myPointDirection = theShip.getPointDirection();
     double dRadians =  myPointDirection*(Math.PI/180);
-    myDirectionX = 10 * Math.cos(dRadians) + theShip.getDirectionX();
-    myDirectionY = 10 * Math.cos(dRadians) + theShip.getDirectionY(); //holds x and y coordinates of the vector for direction of travel
+    myDirectionX = 5 * Math.cos(dRadians) + theShip.getDirectionX();
+    myDirectionY = 5 * Math.sin(dRadians) + theShip.getDirectionY(); //holds x and y coordinates of the vector for direction of travel
    System.out.println(theShip.getPointDirection());
   }
 
