@@ -12,7 +12,7 @@ double y;
 public void setup() 
 {
 
-  size(500, 500, P2D);
+  size(500, 500);
   sky.setX(200);
   sky.setY(200);
 
