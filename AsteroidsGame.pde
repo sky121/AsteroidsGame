@@ -7,10 +7,12 @@ double skyY;
 double skyDirectionX;
 double skyDirectionY;
 boolean hit = true;
+double x;
+double y;
 public void setup() 
 {
 
-  size(500, 500);
+  size(500, 500, P2D);
   sky.setX(200);
   sky.setY(200);
 
@@ -65,20 +67,17 @@ public void draw()
 
     bulletThing.show();
     bulletThing.move();
-    double x = bulletThing.getX();
-    double y = bulletThing.getY();
-  
-    if (y<500 && y>0 && get((int)x, (int)y) == color(0, 255, 0)) {
-      bulletThing.remove(nI);
-      hit = true;
-    } else {
-      hit = false;
-    }
+     x = bulletThing.getX();
+     y = bulletThing.getY();
+       if (y<500 && y>0 && get((int)x, (int)y) == color(0, 255, 0)) {
+    bulletList.remove(nI);
+    hit = true;
+  } else {
+    hit = false;
   }
+  }
+
   if (keyPressed) {
-    if (key == ' ') {
-      bulletList.add(new Bullets(sky));
-    }
   }
   if (keyPressed) {
     if (key == 'h') {
@@ -88,24 +87,24 @@ public void draw()
       sky.setDirectionX(0);
       sky.setDirectionY(0);
     }
-  }
 
-  if (keyPressed) {
+    if (key == ' ') {
+      bulletList.add(new Bullets(sky));
+    }
     if (key == 'w')
       sky.accelerate(0.1);
-  }
-  if (keyPressed) {
+
     if (key == 's')
       sky.accelerate(-0.1);
-  }
-  if (keyPressed) {
+
     if (key == 'd')
       sky.rotate(5);
-  }
-  if (keyPressed) {
+
     if (key == 'a')
       sky.rotate(-5);
   }
+
+
 
   //your code here
 }
@@ -184,7 +183,7 @@ class Asteroids extends Floater
   {    
 
 
-    fill(5, 5, 5);   
+    fill(0, 255, 0);   
     stroke(0, 255, 0); 
 
     //convert degrees to radians for sin and cos         
@@ -281,17 +280,14 @@ class SpaceShip extends Floater
 class Bullets extends Floater
 {
   Bullets(SpaceShip theShip) {
-    //    int corners = 3;  //the number of corners, a triangular floater has 3   
-    //        //holds current direction the ship is pointing in degrees
-    //    int[] xCorners;   
-    //    int[] yCorners;   
-    //    int myColor;   
+
     myCenterX = theShip.getX() ;
     myCenterY = theShip.getY() ; //holds center coordinates   
     myPointDirection = theShip.getPointDirection();
     double dRadians =  myPointDirection*(Math.PI/180);
-    myDirectionX = 5 * Math.cos(dRadians) + theShip.getDirectionX();
-    myDirectionY = 5 * Math.cos(dRadians) + theShip.getDirectionY(); //holds x and y coordinates of the vector for direction of travel
+    myDirectionX = 10 * Math.cos(dRadians) + theShip.getDirectionX();
+    myDirectionY = 10 * Math.cos(dRadians) + theShip.getDirectionY(); //holds x and y coordinates of the vector for direction of travel
+   System.out.println(theShip.getPointDirection());
   }
 
 
