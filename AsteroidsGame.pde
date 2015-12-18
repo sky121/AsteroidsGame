@@ -67,14 +67,14 @@ public void draw()
 
     bulletThing.show();
     bulletThing.move();
-     x = bulletThing.getX();
-     y = bulletThing.getY();
-       if (y<500 && y>0 && get((int)x, (int)y) == color(0, 255, 0)) {
-    bulletList.remove(nI);
-    hit = true;
-  } else {
-    hit = false;
-  }
+    x = bulletThing.getX();
+    y = bulletThing.getY();
+    if (get((int)x, (int)y) == color(0, 255, 0)) {
+      bulletList.remove(nI);
+      hit = true;
+    } else {
+      hit = false;
+    }
   }
 
   if (keyPressed) {
@@ -287,7 +287,7 @@ class Bullets extends Floater
     double dRadians =  myPointDirection*(Math.PI/180);
     myDirectionX = 5 * Math.cos(dRadians) + theShip.getDirectionX();
     myDirectionY = 5 * Math.sin(dRadians) + theShip.getDirectionY(); //holds x and y coordinates of the vector for direction of travel
-   System.out.println(theShip.getPointDirection());
+    System.out.println(theShip.getPointDirection());
   }
 
 
