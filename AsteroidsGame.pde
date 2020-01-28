@@ -41,9 +41,16 @@ public void draw()
     s[i].show();
   } 
 
+  for (int nI = 0; nI < bulletList.size (); nI++)
+  {
+    Bullets bulletThing = bulletList.get(nI);
 
+    bulletThing.show();
+    bulletThing.move();
+    
+  }
   fill(255, 0, 0);
-
+  fill(0,255,0);
   for (int nI = 0; nI < theList.size (); nI++)
   {
     Asteroids anotherThing = theList.get(nI);
@@ -52,7 +59,32 @@ public void draw()
     anotherThing.rotate((int)(Math.random()* 10));
     anotherThing.accelerate(0.1);
   }
+  for (int nI = 0; nI < bulletList.size (); nI++)
+  {
+    Bullets bulletThing = bulletList.get(nI);
 
+
+    x = bulletThing.getX();
+    y = bulletThing.getY();
+
+
+    if (get((int)x, (int)y) == color(0, 255, 0)) {
+      bulletList.remove(nI);
+      for (int I = 0; I < theList.size (); I++)
+      {
+        Asteroids anotherThing = theList.get(I);
+        double x2 = anotherThing.getX();
+        double y2 = anotherThing.getY();
+        if(x-x2<10 && y-y2<10){
+          theList.remove(I);
+        }
+      }
+      
+      hit = true;
+    } else {
+      hit = false;
+    }
+  }
 
   fill(0, 0, 0, 30);
   rect(-1, -1, 600, 600);
@@ -60,25 +92,6 @@ public void draw()
   sky.show();
   sky.move();
 
-
-  for (int nI = 0; nI < bulletList.size (); nI++)
-  {
-    Bullets bulletThing = bulletList.get(nI);
-
-    bulletThing.show();
-    bulletThing.move();
-    x = bulletThing.getX();
-    y = bulletThing.getY();
-    if (get((int)x, (int)y) == color(0, 255, 0)) {
-      bulletList.remove(nI);
-      hit = true;
-    } else {
-      hit = false;
-    }
-  }
-
-  if (keyPressed) {
-  }
   if (keyPressed) {
     if (key == 'h') {
       sky.setX((int)(Math.random()*500));
@@ -205,7 +218,7 @@ class Asteroids extends Floater
 
     yCorners = new int[corners];
 
-    xCorners[0] = -11;
+    xCorners[0] = -10;
 
     yCorners[0] = -8;
 
