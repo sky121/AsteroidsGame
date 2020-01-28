@@ -77,6 +77,7 @@ public void draw()
         double y2 = anotherThing.getY();
         if(x-x2<10 && y-y2<10){
           theList.remove(I);
+          break;
         }
       }
       
